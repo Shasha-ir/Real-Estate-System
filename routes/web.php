@@ -28,6 +28,8 @@ Route::view('/contact', 'contact');
 Route::view('/sellers', 'sellers');
 Route::view('/dashboard/seller', 'dashboard.seller');
 Route::view('/dashboard/buyer', 'dashboard.buyer');
+Route::view('/admin/login', 'admin.login');
+Route::view('/dashboard/admin', 'dashboard.admin');
 
 
 
@@ -55,4 +57,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
