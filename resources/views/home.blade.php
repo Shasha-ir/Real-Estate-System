@@ -48,7 +48,7 @@
     <!-- About Us Section -->
     <section id="about" class="py-20 bg-gray-100">
         <div class="max-w-6xl mx-auto px-6 text-center" data-aos="fade-up">
-            <h2 class="text-3xl font-bold text-indigo-700 mb-6">About Us</h2>
+            <h2 class="text-3xl font-bold  mb-6">About Us</h2>
             <p class="text-lg text-gray-700 leading-relaxed">
                 IR Real Estates is your trusted partner in property management, dedicated to simplifying the real estate
                 journey for buyers and sellers across the nation.
@@ -61,7 +61,7 @@
     <!-- Why Choose Us Section -->
     <section class="py-20 bg-white">
         <div class="max-w-6xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-indigo-700 mb-12" data-aos="fade-up">Why Choose IR Real Estates?</h2>
+            <h2 class="text-3xl font-bold  mb-12" data-aos="fade-up">Why Choose IR Real Estates?</h2>
 
             <div class="grid md:grid-cols-3 gap-10">
                 <div class="bg-gray-100 p-8 rounded-xl shadow-md" data-aos="fade-up" data-aos-delay="100">
@@ -86,7 +86,7 @@
     <!-- Featured Properties Section -->
     <section class="py-20 bg-gray-100">
         <div class="max-w-6xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-indigo-700 mb-12" data-aos="fade-up">Featured Properties</h2>
+            <h2 class="text-3xl font-bold  mb-12" data-aos="fade-up">Featured Properties</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 @for ($i = 1; $i <= 5; $i++)
@@ -110,7 +110,7 @@
     <!-- Stats Section -->
     <section class="py-20 bg-white">
         <div class="max-w-6xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-indigo-700 mb-12" data-aos="fade-up">Our Impact</h2>
+            <h2 class="text-3xl font-bold  mb-12" data-aos="fade-up">Our Impact</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
                 <div class="text-center" data-aos="fade-up" data-aos-delay="100">
                     <p class="text-4xl font-bold text-black">xxx+</p>
@@ -135,7 +135,7 @@
     <!-- Testimonial Carousel -->
     <section class="py-20 bg-gray-100">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-indigo-700 mb-12" data-aos="fade-up">What Our Clients Say</h2>
+            <h2 class="text-3xl font-bold  mb-12" data-aos="fade-up">What Our Clients Say</h2>
 
             <div class="swiper" data-aos="fade-up">
                 <div class="swiper-wrapper">
