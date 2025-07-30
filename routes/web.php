@@ -30,6 +30,7 @@ Route::view('/dashboard/seller', 'dashboard.seller');
 Route::view('/dashboard/buyer', 'dashboard.buyer');
 Route::view('/admin/login', 'admin.login');
 Route::view('/dashboard/admin', 'dashboard.admin');
+Route::view('/register', 'auth.register')->name('register');
 
 
 

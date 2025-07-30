@@ -11,18 +11,23 @@
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- AOS Animate On Scroll CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
 </head>
 
 <body class="font-sans antialiased bg-gray-100">
     <div class="min-h-screen flex flex-col">
         <!-- Navigation -->
         <header class="bg-white shadow py-2 px-6 fixed top-0 w-full z-50">
-
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <div class="flex items-center space-x-3">
                     <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-14 w-auto">
-
                     <span class="text-xl font-bold text-gray-800">IR Real Estates</span>
                 </div>
                 <nav class="space-x-6 text-sm font-medium text-gray-600">
@@ -47,12 +52,39 @@
 
         <!-- Footer -->
         <footer class="bg-gray-900 text-gray-200 py-4 px-6 fixed bottom-0 w-full z-50">
-
             <div class="max-w-7xl mx-auto text-center">
                 <p>&copy; {{ date('Y') }} IR Real Estates. All rights reserved.</p>
             </div>
         </footer>
     </div>
+
+    <!-- AOS Animate On Scroll JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: false,
+        });
+    </script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+            autoplay: {
+                delay: 4000,       // Change slide every 4 seconds
+                speed: 50,
+                disableOnInteraction: false, // Keep autoplay after user interacts
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    </script>
+
+
 </body>
 
 </html>
