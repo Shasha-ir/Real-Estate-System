@@ -16,9 +16,9 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-
 </head>
 
 <body class="font-sans antialiased bg-gray-100">
@@ -73,9 +73,9 @@
         const swiper = new Swiper('.swiper', {
             loop: true,
             autoplay: {
-                delay: 4000,       // Change slide every 4 seconds
+                delay: 4000,
                 speed: 50,
-                disableOnInteraction: false, // Keep autoplay after user interacts
+                disableOnInteraction: false,
             },
             pagination: {
                 el: '.swiper-pagination',
@@ -83,8 +83,6 @@
             },
         });
     </script>
-
-
 </body>
 
 </html>

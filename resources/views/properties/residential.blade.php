@@ -7,7 +7,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             @for ($i = 1; $i <= 6; $i++)
-                <div class="bg-white rounded-lg shadow hover:shadow-xl overflow-hidden cursor-pointer" onclick="showModal({{ $i }})">
+                <div class="bg-white rounded-lg shadow hover:shadow-xl overflow-hidden cursor-pointer transition transform hover:scale-105 duration-300" onclick="showModal({{ $i }})">
                     <img src="{{ asset('images/image' . $i . '.jpg') }}" alt="Property {{ $i }}" class="w-full h-48 object-cover">
                     <div class="p-4">
                         <h2 class="text-lg font-semibold text-gray-800">Property #{{ $i }}</h2>
@@ -32,11 +32,9 @@
                 <p class="text-gray-600 mb-1"><strong>Location:</strong> Colombo 07</p>
                 <p class="text-gray-600 mb-4"><strong>Highlights:</strong> 3 Bedrooms, 2 Bathrooms, Garden, Parking</p>
 
-                {{-- Simulate login behavior --}}
                 <a href="/reserve" class="block w-full text-center bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">
                     Reserve Property
                 </a>
-                {{-- <a href="/register">If not logged in</a> --}}
             </div>
         </div>
     </div>
