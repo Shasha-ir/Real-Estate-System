@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up(): void
 {
-    Schema::create('users', function (Blueprint $table) {
+    Schema::create('property_images', function (Blueprint $table) {
         $table->id();
-        $table->string('name');
-        $table->string('email')->unique();
-        $table->timestamp('email_verified_at')->nullable();
-        $table->string('password');
-        $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
-        $table->rememberToken();
+        $table->foreignId('property_id')->constrained('properties')->onDelete('cascade');
+        $table->string('image_path'); // stored file path
         $table->timestamps();
     });
 }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('property_images');
     }
 };

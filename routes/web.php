@@ -1,61 +1,51 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\Auth\RegisterController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/properties', function () {
-    return view('properties.index');
-});
-
+// Static Pages
+Route::view('/', 'home');
+Route::view('/properties', 'properties.index');
 Route::view('/properties/residential', 'properties.residential');
 Route::view('/properties/commercial', 'properties.commercial');
 Route::view('/contact', 'contact');
+
 Route::view('/sellers', 'sellers');
-Route::view('/dashboard/seller', 'dashboard.seller');
-Route::view('/dashboard/buyer', 'dashboard.buyer');
-Route::view('/admin/login', 'admin.login');
-Route::view('/dashboard/admin', 'dashboard.admin');
-Route::view('/register', 'auth.register')->name('register');
 
+// Auth Routes (Custom Controller-based)
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/register', [RegisterController::class, 'show'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 
-Route::post('/properties/store', function () {
-    return 'Pretend this saved a property.';
-})->name('properties.store');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::view('/reserve', 'reserve')->name('reservation.form');
-
-// Placeholder POST route for backend later
-Route::post('/reserve', function () {
-    return redirect('/dashboard/buyer')->with('message', 'Reservation complete!');
-})->name('reservation.process');
-
-
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+// Dashboards (Authenticated Users Only)
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
+
+    Route::get('/dashboard/seller', fn() => view('dashboard.seller'))->name('seller.dashboard');
+    Route::get('/dashboard/buyer', fn() => view('dashboard.buyer'))->name('buyer.dashboard');
+    Route::get('/dashboard/admin', fn() => view('dashboard.admin'))->name('admin.dashboard');
+
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+// Admin Portal
+Route::view('/admin/login', 'admin.login')->name('admin.login');
+
+// Property Routes
+Route::post('/properties/store', [PropertyController::class, 'store'])->name('properties.store');
+
+// Reservation
+Route::view('/reserve', 'reserve')->name('reservation.form');
+Route::post('/reserve', function () {
+    return redirect()->route('buyer.dashboard')->with('message', 'Reservation complete!');
+})->name('reservation.process');

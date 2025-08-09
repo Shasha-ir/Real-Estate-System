@@ -1,51 +1,43 @@
-<?php
+use App\Models\Role;
+use App\Notifications\UserRegisteredNotification;
+use Illuminate\Support\Facades\Notification;
 
-namespace App\Http\Controllers\Auth;
-
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
-
-class RegisteredUserController extends Controller
+public function store(Request $request): RedirectResponse
 {
-    /**
-     * Display the registration view.
-     */
-    public function create(): View
-    {
-        return view('auth.register');
-    }
+$request->validate([
+'name' => ['required', 'string', 'max:255'],
+'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+'username' => ['required', 'string', 'max:255', 'unique:users,username'],
+'role' => ['required', 'in:buyer,seller'],
+'password' => ['required', 'confirmed', Rules\Password::defaults()],
+]);
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+$role = Role::where('name', $request->role)->firstOrFail();
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+// Generate custom ID
+$prefix = $role->name === 'seller' ? 'S' : 'B';
+$count = User::where('role_id', $role->id)->count() + 1;
+$customId = $prefix . str_pad($count, 3, '0', STR_PAD_LEFT);
 
-        event(new Registered($user));
+// Create user
+$user = User::create([
+'name' => $request->name,
+'email' => $request->email,
+'username' => $request->username,
+'custom_id' => $customId,
+'password' => Hash::make($request->password),
+'role_id' => $role->id,
+]);
 
-        Auth::login($user);
+// Fire event (for email verification if enabled)
+event(new Registered($user));
 
-        return redirect(RouteServiceProvider::HOME);
-    }
+// Send custom notification
+$user->notify(new UserRegisteredNotification($customId));
+
+return redirect()->route('register')->with([
+'success' => 'Successfully registered! Please check your email for your login ID.',
+'user_id' => $customId
+]);
+
 }

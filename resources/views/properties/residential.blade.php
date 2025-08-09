@@ -32,26 +32,51 @@
                 <p class="text-gray-600 mb-1"><strong>Location:</strong> Colombo 07</p>
                 <p class="text-gray-600 mb-4"><strong>Highlights:</strong> 3 Bedrooms, 2 Bathrooms, Garden, Parking</p>
 
-                <a href="/reserve" class="block w-full text-center bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">
-                    Reserve Property
-                </a>
+                @auth
+                    @if (auth()->user()->role->name === 'buyer')
+                        <a href="{{ route('reservation.form') }}" class="block w-full text-center bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">
+                            Reserve Property
+                        </a>
+                    @else
+                        <button onclick="showAuthAlert()" class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+                            Reserve Property
+                        </button>
+                    @endif
+                @else
+                    <button onclick="showAuthAlert()" class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+                        Reserve Property
+                    </button>
+                @endauth
             </div>
+        </div>
+    </div>
+
+    <!-- Auth Alert -->
+    <div id="authAlert" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Login Required</h3>
+            <p class="text-sm text-gray-600 mb-6">Only buyers can reserve properties. Please log in as a buyer to continue.</p>
+            <button onclick="closeAuthAlert()" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">OK</button>
         </div>
     </div>
 
     <script>
         function showModal(id) {
-            const modal = document.getElementById('propertyModal');
-            const img = document.getElementById('modalImage');
-            const title = document.getElementById('modalTitle');
-
-            img.src = `/images/image${id}.jpg`;
-            title.innerText = `Property #${id}`;
-            modal.classList.remove('hidden');
+            document.getElementById('modalImage').src = `/images/image${id}.jpg`;
+            document.getElementById('modalTitle').innerText = `Property #${id}`;
+            document.getElementById('propertyModal').classList.remove('hidden');
         }
 
         function closeModal() {
             document.getElementById('propertyModal').classList.add('hidden');
+        }
+
+        function showAuthAlert() {
+            document.getElementById('authAlert').classList.remove('hidden');
+        }
+
+        function closeAuthAlert() {
+            document.getElementById('authAlert').classList.add('hidden');
         }
     </script>
 </div>

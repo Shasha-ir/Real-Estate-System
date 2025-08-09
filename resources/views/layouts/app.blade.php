@@ -39,8 +39,26 @@
                         <a href="{{ route('login') }}" class="hover:text-indigo-600">Login</a>
                         <a href="{{ route('register') }}" class="hover:text-indigo-600">Register</a>
                     @else
-                        <a href="{{ route('dashboard') }}" class="hover:text-indigo-600">Dashboard</a>
+                        @php
+                            $role = Auth::user()->role->name;
+                        @endphp
+
+                        @if ($role === 'seller')
+                            <a href="{{ url('/dashboard/seller') }}" class="hover:text-indigo-600">Dashboard</a>
+                        @elseif ($role === 'buyer')
+                            <a href="{{ url('/dashboard/buyer') }}" class="hover:text-indigo-600">Dashboard</a>
+                        @endif
+
+                        <!-- Logout -->
+                        <form method="POST" action="{{ route('logout') }}" class="inline">
+                            @csrf
+                            <button type="submit"
+                                class="hover:text-indigo-600 bg-transparent border-none p-0 m-0 inline font-medium text-sm cursor-pointer">
+                                Logout
+                            </button>
+                        </form>
                     @endguest
+
                 </nav>
             </div>
         </header>
