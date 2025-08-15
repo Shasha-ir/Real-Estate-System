@@ -32,7 +32,7 @@
                 <!-- Temporary Admin Dashboard Preview -->
                 <div class="mt-6 text-center">
                     <h3 class="text-sm text-gray-400 mb-2">Temporary Preview</h3>
-                    <a href="/dashboard/admin"
+                    <a href="{{ route('admin.preview') }}"
                         class="inline-block px-4 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition">
                         Preview Admin Dashboard
                     </a>

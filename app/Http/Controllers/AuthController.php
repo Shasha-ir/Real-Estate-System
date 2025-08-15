@@ -65,22 +65,42 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('username', $request->username)
-            ->where('custom_id', $request->user_id) // assumes your user table has custom_id like "S001" or "B002"
+            ->where('custom_id', $request->user_id)
+            ->with('role')
             ->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
 
-            if ($user->role->name === 'seller') {
-                return redirect()->route('seller.dashboard');
-            } elseif ($user->role->name === 'buyer') {
-                return redirect()->route('buyer.dashboard');
-            } else {
-                return redirect()->route('home'); // fallback
+            $router = app('router');
+
+            if (optional($user->role)->name === 'seller') {
+                // Prefer new canonical name, fall back to legacy or raw URL
+                if ($router->has('dashboard.seller')) {
+                    return redirect()->route('dashboard.seller');
+                } elseif ($router->has('seller.dashboard')) {
+                    return redirect()->route('seller.dashboard');
+                }
+                return redirect('/dashboard/seller');
             }
+
+            if (optional($user->role)->name === 'buyer') {
+                if ($router->has('dashboard.buyer')) {
+                    return redirect()->route('dashboard.buyer');
+                } elseif ($router->has('buyer.dashboard')) {
+                    return redirect()->route('buyer.dashboard');
+                }
+                return redirect('/dashboard/buyer');
+            }
+
+            // Fallback for any other role
+            if ($router->has('dashboard')) {
+                return redirect()->route('dashboard');
+            }
+            return redirect('/'); // final fallback
         }
 
-        return redirect()->back()->with('error', 'Invalid credentials. Please try again.');
+        return back()->with('error', 'Invalid credentials. Please try again.');
     }
 
     public function logout()

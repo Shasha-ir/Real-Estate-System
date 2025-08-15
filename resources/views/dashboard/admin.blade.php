@@ -14,6 +14,7 @@
             <a href="#" class="block text-red-600 hover:underline mt-4">🚪 Logout</a>
         </nav>
     </aside>
+    
 
     {{-- Main Content --}}
     <main class="flex-1 p-6 pt-24 sm:pt-8 pb-44">
